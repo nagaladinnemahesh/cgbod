@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  php:
+    build: ./php
+    volumes:
+      - ./laravel:/var/www/html
+    depends_on:
+      - mysql
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - ./laravel:/var/www/html
+    ports:
+      - "80:80"
+    depends_on:
+      - php
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: Mahesh@0404!
+      MYSQL_DATABASE: cgbod
+    ports:
+      - "3306:3306"
+
+  composer:
+    build: ./composer
+    volumes:
+      - ./laravel:/app
